@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:text="${mensagem}" style="color: red"></div>
+<form th:action="@{/estudantes/{id}/notas(id=${estudante.id})}" method="POST" th:object="${estudante}">
+    <label>Nome:</label> <p th:text="${estudante.nome}"></p>
+
+    <label>Nota 1:</label> <p th:text="${estudante.nota1}"></p><input type="number" th:id="nota1" th:name="nota1" th:value="*{nota1}"/>
+    <p th:if="${#fields.hasErrors('nota1')}" th:errorclass="error"
+       th:errors="*{nota1}"/>
+
+    <label>Nota 2:</label> <p th:text="${estudante.nota2}"></p><input type="number" th:id="nota2" th:name="nota2" th:value="*{nota2}"/>
+    <p th:if="${#fields.hasErrors('nota2')}" th:errorclass="error"
+       th:errors="*{nota2}"/>
+
+    <label>Nota 3:</label> <p th:text="${estudante.nota3}"></p><input type="number" th:id="nota3" th:name="nota3" th:value="*{nota3}"/>
+    <p th:if="${#fields.hasErrors('nota3')}" th:errorclass="error"
+       th:errors="*{nota3}"/>
+
+    <label>Nota Final:</label> <p th:text="${estudante.notaFinal}"></p><input type="number" th:id="notaFinal" th:name="notaFinal" th:value="*{notaFinal}"/>
+    <p th:if="${#fields.hasErrors('notaFinal')}" th:errorclass="error"
+       th:errors="*{notaFinal}"/>
+
+    <label>Faltas:</label> <p th:text="${estudante.faltas}"></p><input type="number" th:id="faltas" th:name="faltas" th:value="*{faltas}" />
+    <p th:if="${#fields.hasErrors('faltas')}" th:errorclass="error"
+       th:errors="*{faltas}"/>
+
+    <input type="submit" value="Editar"/> <a th:href="@{/estudantes}">Voltar</a>
+</form>
+</body>
+</html>

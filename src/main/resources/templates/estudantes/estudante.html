@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <body>
+        <div th:text="${mensagem}" style="color: red"></div>
+        <form th:action="@{/estudantes/{id}/editar(id=${estudante.id})}" method="POST" th:object="${estudante}">
+            <label>Nome:</label> <p th:text="${estudante.nome}"></p><input type="text" th:id="nome" th:name="nome" th:value="*{nome}"/>
+            <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error"
+               th:errors="*{nome}" />
+
+            <label>Nascimento:</label> <p th:text="${#dates.format(estudante.nascimento, 'dd-MMM-yyyy')}"></p><input type="date" th:id="nascimento" th:name="nascimento" th:value="*{nascimento}"/>
+            <p th:if="${#fields.hasErrors('nascimento')}" th:errorclass="error"
+               th:errors="*{nascimento}"/>
+
+            <input type="submit" value="Editar"/> <a th:href="@{/estudantes}">Voltar</a>
+        </form>
+    </body>
+</html>
