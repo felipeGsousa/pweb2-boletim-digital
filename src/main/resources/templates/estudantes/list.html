@@ -1,53 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt_BR" xmlns:th="www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <a th:href="@{/estudantes/form}">
-        <img th:src="@{/icons/plus-circle-fill.svg}" title="Cadastrar Estudante" alt="Cadastrar Estudante" />
-    </a>
-    <a th:href="@{/estudantes/relatorio}">
-        <img th:src="@{/icons/journal-text.svg}" title="Relatorio" alt="Relatorio" />
-    </a>
-    <form>
-        <div th:if="${#lists.size(estudantes) > 0}">
-            <form >
-                <div th:text="'Existem ' + ${#lists.size(estudantes)} + ' registros.'"></div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Remover</th>
-                        <th>Notas</th>
-                        <th>Editar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="estudante: ${estudantes}">
-                        <td th:text="${estudante.nome}"></td></td>
-                        <td>
-                            <a th:href="@{/estudantes/{id}/delete/(id=${estudante.id})}">
-                                <img th:src="@{/icons/person-dash-fill.svg}" title="Excluir Estudante" alt="Excluir Estudante" />
-                            </a>
-                        </td>
-                        <td>
-                            <a th:href="@{/estudantes/notas/{id}/(id=${estudante.id})}">
-                                <img th:src="@{/icons/journal-bookmark-fill.svg}" title="Editar Estudante" alt="Editar Estudante" />
-                            </a>
-                        </td>
-                        <td>
-                            <a th:href="@{/estudantes/estudante/{id}/(id=${estudante.id})}">
-                                <img th:src="@{/icons/pencil-square.svg}" title="Editar Estudante" alt="Editar Estudante" />
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <meta th:insert="~{fragments/header :: head}">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navigation :: menu}"></div>
+        <main role="main" class="container">
+            <form>
+                <div th:if="${#lists.size(estudantes) > 0}">
+                    <form >
+                        <div th:text="'Existem ' + ${#lists.size(estudantes)} + ' registros.'"></div>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Remover</th>
+                                <th>Notas</th>
+                                <th>Editar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="estudante: ${estudantes}">
+                                <td th:text="${estudante.nome}"></td></td>
+                                <td>
+                                    <a th:href="@{/estudantes/{id}/delete/(id=${estudante.id})}">
+                                        <img th:src="@{/icons/person-dash-fill.svg}" title="Excluir Estudante" alt="Excluir Estudante" />
+                                    </a>
+                                </td>
+                                <td>
+                                    <a th:href="@{/estudantes/notas/{id}/(id=${estudante.id})}">
+                                        <img th:src="@{/icons/journal-bookmark-fill.svg}" title="Editar Estudante" alt="Editar Estudante" />
+                                    </a>
+                                </td>
+                                <td>
+                                    <a th:href="@{/estudantes/estudante/{id}/(id=${estudante.id})}">
+                                        <img th:src="@{/icons/pencil-square.svg}" title="Editar Estudante" alt="Editar Estudante" />
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
             </form>
-        </div>
-    </form>
-
-</body>
+        </main>
+        <div th:insert="~{fragments/footer :: foot}"></div>
+    </body>
 </html>

@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt_BR" xmlns:th="www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<a th:href="@{/estudantes/}">
-    <img th:src="@{/icons/arrow-left.svg}" title="Voltar" alt="Voltar" />
-</a>
-<form>
-    <div th:if="${#lists.size(estudantes) > 0}">
-        <form >
-            <div th:text="'Existem ' + ${#lists.size(estudantes)} + ' registros.'"></div>
-            <table>
-                <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Nascimento</th>
-                    <th>Média</th>
-                    <th>Situação</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="estudante: ${estudantes}">
-                        <td th:text="${estudante.nome}"></td>
-                        <td th:text="${#dates.format(estudante.nascimento, 'dd-MMM-yyyy')}"></td>
-                        <td th:text="${@mediaCalc.media(estudante)}"></td>
-                        <td th:text="${estudante.situacao}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-    </div>
-</form>
-
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <meta th:insert="~{fragments/header :: head}">
+    </head>
+    <body>
+        <div th:insert="~{fragments/navigation :: menu}"></div>
+            <main role="main" class="container">
+                <form>
+                    <div th:if="${#lists.size(estudantes) > 0}">
+                        <form >
+                            <div th:text="'Existem ' + ${#lists.size(estudantes)} + ' registros.'"></div>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Nascimento</th>
+                                    <th>Média</th>
+                                    <th>Situação</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="estudante: ${estudantes}">
+                                        <td th:text="${estudante.nome}"></td>
+                                        <td th:text="${#dates.format(estudante.nascimento, 'dd-MMM-yyyy')}"></td>
+                                        <td th:text="${@mediaCalc.media(estudante)}"></td>
+                                        <td th:text="${estudante.situacao}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </form>
+            </main>
+        <div th:insert="~{fragments/footer :: foot}"></div>
+    </body>
 </html>

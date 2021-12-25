@@ -3,22 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
+        <meta th:insert="~{fragments/header :: head}">
     </head>
     <body>
+        <div th:insert="~{fragments/navigation :: menu}"></div>
         <div th:text="${mensagem}" style="color: red"></div>
-        <form th:action="@{/estudantes/save}" method="POST" th:object="${estudante}">
-            <input type="hidden" th:field="*{id}" />
-            <label>Nome</label> <input type="text" th:field="*{nome}" /><br />
-            <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error"
-               th:errors="*{nome}" />
+        <main role="main" class="container">
+            <div class="starter-template">
+                <form th:action="@{/estudantes/save}" method="POST" th:object="${estudante}">
+                    <input type="hidden" th:field="*{id}" />
+                    <label>Nome</label> <input type="text" th:field="*{nome}" /><br />
+                    <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error"
+                       th:errors="*{nome}" /><br/>
 
-            <label>Nascimento</label> <input type="date" th:field="*{nascimento}" />
-            <p th:if="${#fields.hasErrors('nascimento')}" th:errorclass="error"
-               th:errors="*{nascimento}" />
+                    <label>Nascimento</label> <input type="date" th:field="*{nascimento}" />
+                    <p th:if="${#fields.hasErrors('nascimento')}" th:errorclass="error"
+                       th:errors="*{nascimento}" /><br/>
 
-            <input type="submit" value="Salvar"/> <a th:href="@{/estudantes}">Cancelar</a>
-        </form>
-
-
+                    <input type="submit" value="Salvar"/> <a th:href="@{/estudantes/form}">Cancelar</a>
+                </form>
+            </div>
+        </main>
+        <div th:insert="~{fragments/footer :: foot}"></div>
     </body>
 </html>

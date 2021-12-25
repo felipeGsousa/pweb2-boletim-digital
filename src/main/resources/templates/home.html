@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta th:insert="~{fragments/header :: head}">
 </head>
 <body>
+    <div th:insert="~{fragments/navigation :: menu}"></div>
+    <div th:insert="~{fragments/footer :: foot}"></div>
 </body>
 </html>

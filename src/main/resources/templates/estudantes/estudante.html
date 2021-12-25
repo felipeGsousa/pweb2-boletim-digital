@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt_BR" xmlns:th="www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <meta th:insert="~{fragments/header :: head}">
+    </head>
     <body>
-        <div th:text="${mensagem}" style="color: red"></div>
-        <form th:action="@{/estudantes/{id}/editar(id=${estudante.id})}" method="POST" th:object="${estudante}">
-            <label>Nome:</label> <p th:text="${estudante.nome}"></p><input type="text" th:id="nome" th:name="nome" th:value="*{nome}"/>
-            <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error"
-               th:errors="*{nome}" />
+        <div th:insert="~{fragments/navigation :: menu}"></div>
+        <main role="main" class="container">
+            <form th:action="@{/estudantes/{id}/editar(id=${estudante.id})}" method="POST" th:object="${estudante}">
+                <label>Nome:</label><input type="text" th:id="nome" th:name="nome" th:value="*{nome}"/>
+                <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error"
+                   th:errors="*{nome}" /><br/>
 
-            <label>Nascimento:</label> <p th:text="${#dates.format(estudante.nascimento, 'dd-MMM-yyyy')}"></p><input type="date" th:id="nascimento" th:name="nascimento" th:value="*{nascimento}"/>
-            <p th:if="${#fields.hasErrors('nascimento')}" th:errorclass="error"
-               th:errors="*{nascimento}"/>
+                <label>Nascimento:</label><input type="date" th:id="nascimento" th:name="nascimento" th:value="*{nascimento}"/>
+                <p th:if="${#fields.hasErrors('nascimento')}" th:errorclass="error"
+                   th:errors="*{nascimento}"/><br/>
 
-            <input type="submit" value="Editar"/> <a th:href="@{/estudantes}">Voltar</a>
-        </form>
+                <input type="submit" value="Editar"/> <a th:href="@{/estudantes/list}">Voltar</a>
+            </form>
+        </main>
+        <div th:insert="~{fragments/footer :: foot}"></div>
     </body>
 </html>

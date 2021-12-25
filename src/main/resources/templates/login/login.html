@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta th:insert="~{fragments/header :: head}">
 </head>
 <body>
+    <div th:text="${mensagem}" style="color: red"></div>
+    <form th:action="@{/login}" method="POST" th:object="${admin}">
+        <input type="hidden" th:field="*{id}" />
 
+        <label>Nome</label> <input type="text" th:field="*{nome}"/><br />
+        <label>senha</label> <input type="password" th:field="*{senha}" />
+        <input type="submit" value="logar"/>
+    </form>
+    <div th:insert="~{fragments/footer :: foot}"></div>
 </body>
 </html>

@@ -2,6 +2,7 @@ package br.edu.ifpb.pweb2.boletimDigital.controller;
 
 import br.edu.ifpb.pweb2.boletimDigital.model.Estudante;
 import br.edu.ifpb.pweb2.boletimDigital.repository.EstudanteRepository;
+import br.edu.ifpb.pweb2.boletimDigital.utils.MediaCalc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ public class EstudanteController {
 
     @Autowired
     private EstudanteRepository estudanteRepository;
+
+    @Autowired
+    private MediaCalc mediaCalc;
 
     @RequestMapping("/form")
     public String getForm(Estudante estudante, Model model){
@@ -61,12 +65,12 @@ public class EstudanteController {
             return "estudantes/form";
         }
 
-        media(estudante);
+        defineSituacao(estudante, mediaCalc.media(estudante));
         estudanteRepository.save(estudante);
 
         redirectAttributes.addFlashAttribute("mensagem", "Estudante cadastrado com sucesso!");
 
-        return "redirect:/estudantes";
+        return "redirect:/estudantes/list";
     }
 
 
@@ -93,11 +97,12 @@ public class EstudanteController {
             estudante.setFaltas(Integer.parseInt(allParams.get("faltas")));
         }
 
-        media(estudante);
+        defineSituacao(estudante, mediaCalc.media(estudante));
+        estudanteRepository.save(estudante);
 
         redirectAttributes.addFlashAttribute("mensagem", "Notas adicionadas!");
 
-        return "redirect:/estudantes";
+        return "redirect:/estudantes/list";
     }
 
     @RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
@@ -126,67 +131,30 @@ public class EstudanteController {
 
         redirectAttributes.addFlashAttribute("mensagem", "Dados do estudante foram editados!");
 
-        return "redirect:/estudantes";
+        return "redirect:/estudantes/list";
     }
 
     @RequestMapping("/{id}/delete")
     public ModelAndView apagaEstudante(@PathVariable(value = "id") Integer id, ModelAndView modelAndView, RedirectAttributes attr) {
         estudanteRepository.deleteById(id);
         attr.addFlashAttribute("mensagem", "Estudante removido com sucesso!");
-        modelAndView.setViewName("redirect:/estudantes");
+        modelAndView.setViewName("redirect:/estudantes/list");
         return modelAndView;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ModelAndView listAll(ModelAndView modelAndView){
         modelAndView.addObject("estudantes", estudanteRepository.findAll());
         modelAndView.setViewName("estudantes/list");
         return modelAndView;
     }
 
-    public void media(Estudante estudante){
+    public void defineSituacao(Estudante estudante, BigDecimal media){
+        boolean faltaNota = false;
 
-       BigDecimal media = new BigDecimal(0);
-       BigDecimal divisor = new BigDecimal(3);
-       boolean faltaNota = false;
-
-       if(estudante.getNota1() == null || estudante.getNota2() == null || estudante.getNota3() == null){
+        if(estudante.getNota1() == null || estudante.getNota2() == null || estudante.getNota3() == null){
             faltaNota = true;
-
-            if (estudante.getNota1() == null && estudante.getNota2() != null && estudante.getNota3() != null){
-
-                media = estudante.getNota2().add(estudante.getNota3()).divide(divisor,0 , RoundingMode.HALF_UP);
-            }else if(estudante.getNota2() == null && estudante.getNota1() != null && estudante.getNota3() != null){
-
-                media = estudante.getNota1().add(estudante.getNota3()).divide(divisor,0 , RoundingMode.HALF_UP);
-            }else if(estudante.getNota3() == null && estudante.getNota2() != null && estudante.getNota1() != null){
-
-                media = estudante.getNota1().add(estudante.getNota2()).divide(divisor,0 , RoundingMode.HALF_UP);
-            }else if(estudante.getNota2()  == null && estudante.getNota3() == null && estudante.getNota1() != null){
-
-                media = estudante.getNota1().divide(divisor,0 , RoundingMode.HALF_UP);
-            }else if(estudante.getNota3() == null && estudante.getNota2()  != null){
-
-                media = estudante.getNota2() .divide(divisor,0 , RoundingMode.HALF_UP);
-            }else if(estudante.getNota3() != null){
-
-                media = estudante.getNota3().divide(divisor,0 , RoundingMode.HALF_UP);
-            }else if (estudante.getNota1() == null && estudante.getNota2() == null && estudante.getNota3() == null) {
-
-                media = new BigDecimal(101);
-            }
-
-       }else {
-
-           media = estudante.getNota1().add(estudante.getNota2() .add(estudante.getNota3())).divide(divisor,0 , RoundingMode.HALF_UP);
-       }
-
-       defineSituacao(estudante, media, faltaNota);
-       estudanteRepository.save(estudante);
-
-    }
-
-    public void defineSituacao(Estudante estudante, BigDecimal media, boolean faltaNota){
+        }
 
         if (media.compareTo(new BigDecimal(101)) == -1) {
             if (estudante.getFaltas()!= null && estudante.getFaltas() >= 25) {
@@ -197,9 +165,9 @@ public class EstudanteController {
                 estudante.setSituacao(Estudante.EnumSituacao.AP);
             } else if (media.compareTo(new BigDecimal(40)) == -1 && !faltaNota && estudante.getFaltas() != null) {
                 estudante.setSituacao(Estudante.EnumSituacao.RP);
-            } else if (estudante.getNotaFinal() != null && media.multiply(new BigDecimal(60).add(estudante.getNotaFinal().multiply(new BigDecimal(40)))).divide(new BigDecimal(100)).compareTo(new BigDecimal(50)) == 1) {
+            } else if (estudante.getNotaFinal() != null && media.multiply(new BigDecimal(60)).add(estudante.getNotaFinal().multiply(new BigDecimal(40))).divide(new BigDecimal(100)).compareTo(new BigDecimal(49.999)) == 1) {
                 estudante.setSituacao(Estudante.EnumSituacao.AP);
-            } else if (media.compareTo(new BigDecimal(39)) == 1 && media.compareTo(new BigDecimal(70)) == -1 && !faltaNota && estudante.getFaltas() != null) {
+            } else if (media.compareTo(new BigDecimal(39)) == 1 && media.compareTo(new BigDecimal(70)) == -1 && !faltaNota && estudante.getFaltas() != null && estudante.getNotaFinal() == null) {
                 estudante.setSituacao(Estudante.EnumSituacao.FN);
             } else {
                 estudante.setSituacao(Estudante.EnumSituacao.RP);
@@ -207,5 +175,6 @@ public class EstudanteController {
         } else {
             estudante.setSituacao(Estudante.EnumSituacao.MT);
         }
+        estudanteRepository.save(estudante);
     }
 }
