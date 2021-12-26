@@ -7,45 +7,44 @@
     </head>
     <body>
         <div th:insert="~{fragments/navigation :: menu}"></div>
-        <main role="main" class="container">
-            <form>
-                <div th:if="${#lists.size(estudantes) > 0}">
-                    <form >
-                        <div th:text="'Existem ' + ${#lists.size(estudantes)} + ' registros.'"></div>
-                        <table>
-                            <thead>
+        <form class="container">
+            <h1 class="text-center">Estudantes</h1>
+            <div th:text="${mensagem}" style="color: green"></div>
+            <div>
+                <form>
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
                             <tr>
-                                <th>Nome</th>
-                                <th>Remover</th>
-                                <th>Notas</th>
-                                <th>Editar</th>
+                                <th class="text-center">Nome</th>
+                                <th class="text-center">Remover</th>
+                                <th class="text-center">Notas</th>
+                                <th class="text-center">Editar</th>
                             </tr>
-                            </thead>
-                            <tbody>
+                        </thead>
+                        <tbody th:if="${#lists.size(estudantes) > 0}">
                             <tr th:each="estudante: ${estudantes}">
-                                <td th:text="${estudante.nome}"></td></td>
-                                <td>
-                                    <a th:href="@{/estudantes/{id}/delete/(id=${estudante.id})}">
+                                <td class="text-center" th:text="${estudante.nome}"></td></td>
+                                <td class="text-center">
+                                    <a th:href="@{/estudantes/delete/{id}/(id=${estudante.id})}">
                                         <img th:src="@{/icons/person-dash-fill.svg}" title="Excluir Estudante" alt="Excluir Estudante" />
                                     </a>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <a th:href="@{/estudantes/notas/{id}/(id=${estudante.id})}">
                                         <img th:src="@{/icons/journal-bookmark-fill.svg}" title="Editar Estudante" alt="Editar Estudante" />
                                     </a>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <a th:href="@{/estudantes/estudante/{id}/(id=${estudante.id})}">
                                         <img th:src="@{/icons/pencil-square.svg}" title="Editar Estudante" alt="Editar Estudante" />
                                     </a>
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
-            </form>
-        </main>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </form>
         <div th:insert="~{fragments/footer :: foot}"></div>
     </body>
 </html>

@@ -1,6 +1,7 @@
 package br.edu.ifpb.pweb2.boletimDigital.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_admin")
@@ -12,9 +13,11 @@ public class Admin {
     private Long id;
 
     @Column(name = "ad_nm_nome")
+    @NotNull(message = "Campo nome não pode ser vazio")
     private String nome;
 
     @Column(name = "sn_senha")
+    @NotNull(message = "Campo senha não pode ser vazio")
     private String senha;
 
     @Deprecated

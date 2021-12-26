@@ -8,22 +8,22 @@
     <body>
         <div th:insert="~{fragments/navigation :: menu}"></div>
         <div th:text="${mensagem}" style="color: red"></div>
-        <main role="main" class="container">
-            <div class="starter-template">
-                <form th:action="@{/estudantes/save}" method="POST" th:object="${estudante}">
+        <div class="centered starter-template">
+            <H1 class="text-center">Cadastro de Estudante</H1>
+            <form th:action="@{/estudantes/save}" method="POST" th:object="${estudante}">
+                <div class="form-group">
                     <input type="hidden" th:field="*{id}" />
-                    <label>Nome</label> <input type="text" th:field="*{nome}" /><br />
-                    <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error"
-                       th:errors="*{nome}" /><br/>
-
-                    <label>Nascimento</label> <input type="date" th:field="*{nascimento}" />
-                    <p th:if="${#fields.hasErrors('nascimento')}" th:errorclass="error"
-                       th:errors="*{nascimento}" /><br/>
-
-                    <input type="submit" value="Salvar"/> <a th:href="@{/estudantes/form}">Cancelar</a>
-                </form>
-            </div>
-        </main>
+                    <label>Nome </label><input class="form-control form-control-lg" type="text" th:field="*{nome}"/><br/>
+                    <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}" />
+                </div>
+                <div class="form-group">
+                    <label>Nascimento </label><input class="form-control form-control-lg" type="date" th:field="*{nascimento}"/><br/>
+                    <p th:if="${#fields.hasErrors('nascimento')}" th:errorclass="error" th:errors="*{nascimento}" />
+                </div>
+                <button class="btn btn-secondary btn-lg" type="submit">Salvar</button>
+                <a style="text-decoration: none" th:href="@{/home}"><button class="btn btn-secondary btn-lg" type="button">Cancelar</button></a>
+            </form>
+        </div>
         <div th:insert="~{fragments/footer :: foot}"></div>
     </body>
 </html>

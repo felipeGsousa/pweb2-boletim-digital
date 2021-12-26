@@ -7,19 +7,29 @@
     </head>
     <body>
         <div th:insert="~{fragments/navigation :: menu}"></div>
-        <main role="main" class="container">
-            <form th:action="@{/estudantes/{id}/editar(id=${estudante.id})}" method="POST" th:object="${estudante}">
-                <label>Nome:</label><input type="text" th:id="nome" th:name="nome" th:value="*{nome}"/>
-                <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error"
-                   th:errors="*{nome}" /><br/>
+        <div class="centered starter-template">
+            <form th:action="@{/estudantes/editar}" method="POST" th:object="${estudante}">
+                <h1 class="text-center">Edição de estudante</h1>
 
-                <label>Nascimento:</label><input type="date" th:id="nascimento" th:name="nascimento" th:value="*{nascimento}"/>
-                <p th:if="${#fields.hasErrors('nascimento')}" th:errorclass="error"
-                   th:errors="*{nascimento}"/><br/>
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input class="form-control form-control-lg" type="text" th:id="nome" th:name="nome" th:value="*{nome}"/><br/>
+                    <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}"/>
+                </div>
 
-                <input type="submit" value="Editar"/> <a th:href="@{/estudantes/list}">Voltar</a>
+
+                <div class="form-group">
+                    <label>Nascimento</label>
+                    <input class="form-control form-control-lg" type="date" th:id="nascimento" th:name="nascimento" th:value="*{nascimento}"/><br/>
+                    <p th:if="${#fields.hasErrors('nascimento')}" th:errorclass="error" th:errors="*{nascimento}"/>
+                </div>
+
+                <button class="btn btn-secondary btn-lg" type="submit">Editar</button>
+                <a style="text-decoration: none" th:href="@{/estudantes/list}"><button class="btn btn-secondary btn-lg" type="button">Voltar</button></a>
+
             </form>
-        </main>
+        </div>
         <div th:insert="~{fragments/footer :: foot}"></div>
     </body>
 </html>
+

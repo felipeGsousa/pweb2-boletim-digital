@@ -8,33 +8,36 @@
     <body>
         <div th:insert="~{fragments/navigation :: menu}"></div>
         <div th:text="${mensagem}" style="color: red"></div>
-        <main role="main" class="container">
-            <form th:action="@{/estudantes/{id}/notas(id=${estudante.id})}" method="POST" th:object="${estudante}">
-                <label>Nome:</label> <p th:text="${estudante.nome}"></p><br/>
-
-                <label>Nota 1:</label><input type="number" th:id="nota1" th:name="nota1" th:value="*{nota1}"/>
-                <p th:if="${#fields.hasErrors('nota1')}" th:errorclass="error"
-                   th:errors="*{nota1}"/><br/>
-
-                <label>Nota 2:</label><input type="number" th:id="nota2" th:name="nota2" th:value="*{nota2}"/>
-                <p th:if="${#fields.hasErrors('nota2')}" th:errorclass="error"
-                   th:errors="*{nota2}"/><br/>
-
-                <label>Nota 3:</label><input type="number" th:id="nota3" th:name="nota3" th:value="*{nota3}"/>
-                <p th:if="${#fields.hasErrors('nota3')}" th:errorclass="error"
-                   th:errors="*{nota3}"/><br/>
-
-                <label>Nota Final:</label><input type="number" th:id="notaFinal" th:name="notaFinal" th:value="*{notaFinal}"/>
-                <p th:if="${#fields.hasErrors('notaFinal')}" th:errorclass="error"
-                   th:errors="*{notaFinal}"/><br/>
-
-                <label>Faltas:</label><input type="number" th:id="faltas" th:name="faltas" th:value="*{faltas}" />
-                <p th:if="${#fields.hasErrors('faltas')}" th:errorclass="error"
-                   th:errors="*{faltas}"/><br/>
-
-                <input type="submit" value="Editar"/> <a th:href="@{/estudantes/list}">Voltar</a>
-            </form>
-        </main>
+            <div class="container">
+                <h1 class="text-center">Adição de notas</h1>
+                <form th:action="@{/estudantes/salvanotas}" method="POST" th:object="${estudante}">
+                    <input type="hidden" th:field="*{nome}" />
+                    <input type="hidden" th:field="*{nascimento}" />
+                    <label>Nome:</label> <h3 th:text="${estudante.nome}"></h3><br/>
+                    <div class="form-group">
+                        <label>Nota 1</label><input class="form-control form-control-lg" type="number" th:id="nota1" th:name="nota1" th:value="*{nota1}"/>
+                        <p th:if="${#fields.hasErrors('nota1')}" th:errorclass="error" th:errors="*{nota1}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Nota 2</label><input class="form-control form-control-lg" type="number" th:id="nota2" th:name="nota2" th:value="*{nota2}"/>
+                        <p th:if="${#fields.hasErrors('nota2')}" th:errorclass="error" th:errors="*{nota2}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Nota 3</label><input class="form-control form-control-lg" type="number" th:id="nota3" th:name="nota3" th:value="*{nota3}"/>
+                        <p th:if="${#fields.hasErrors('nota3')}" th:errorclass="error" th:errors="*{nota3}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Nota Final</label><input class="form-control form-control-lg" type="number" th:id="notaFinal" th:name="notaFinal" th:value="*{notaFinal}"/>
+                        <p th:if="${#fields.hasErrors('notaFinal')}" th:errorclass="error" th:errors="*{notaFinal}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Faltas</label><input class="form-control form-control-lg" type="number" th:id="faltas" th:name="faltas" th:value="*{faltas}" />
+                        <p th:if="${#fields.hasErrors('faltas')}" th:errorclass="error" th:errors="*{faltas}" />
+                    </div>
+                    <button class="btn btn-secondary btn-lg" type="submit">Editar</button>
+                    <a style="text-decoration: none" th:href="@{/estudantes/list}"><button class="btn btn-secondary btn-lg" type="button">Voltar</button></a>
+                </form>
+            </div>
         <div th:insert="~{fragments/footer :: foot}"></div>
     </body>
 </html>

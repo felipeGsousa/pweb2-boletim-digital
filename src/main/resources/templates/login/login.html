@@ -6,14 +6,23 @@
     <meta th:insert="~{fragments/header :: head}">
 </head>
 <body>
-    <div th:text="${mensagem}" style="color: red"></div>
-    <form th:action="@{/login}" method="POST" th:object="${admin}">
-        <input type="hidden" th:field="*{id}" />
+    <div class="centered starter-template">
+        <h1 class="text-center">Login</h1>
+        <div th:text="${mensagem}" style="color: red"></div>
+        <form th:action="@{/login}" method="POST" th:object="${admin}">
+            <div class="form-group">
+                <input type="hidden" th:field="*{id}" />
+                <label>Login</label> <input type="text" class="form-control form-control-lg" th:field="*{nome}"/><br/>
+                <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}" />
+            </div>
 
-        <label>Nome</label> <input type="text" th:field="*{nome}"/><br />
-        <label>senha</label> <input type="password" th:field="*{senha}" />
-        <input type="submit" value="logar"/>
-    </form>
+            <div class="form-group">
+                <label>senha</label> <input type="password" class="form-control form-control-lg" th:field="*{senha}"/><br/>
+                <p th:if="${#fields.hasErrors('senha')}" th:errorclass="error" th:errors="*{senha}" />
+            </div>
+            <button class="btn btn-secondary btn-lg btn-block" type="submit">Login</button>
+        </form>
+    </div>
     <div th:insert="~{fragments/footer :: foot}"></div>
 </body>
 </html>

@@ -7,33 +7,32 @@
     </head>
     <body>
         <div th:insert="~{fragments/navigation :: menu}"></div>
-            <main role="main" class="container">
-                <form>
-                    <div th:if="${#lists.size(estudantes) > 0}">
+
+                <form class="container">
+                    <h1 class="text-center">Relatório</h1>
+                    <div>
                         <form >
-                            <div th:text="'Existem ' + ${#lists.size(estudantes)} + ' registros.'"></div>
-                            <table>
-                                <thead>
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
                                 <tr>
-                                    <th>Nome</th>
-                                    <th>Nascimento</th>
-                                    <th>Média</th>
-                                    <th>Situação</th>
+                                    <th class="text-center">Nome</th>
+                                    <th class="text-center">Nascimento</th>
+                                    <th class="text-center">Média</th>
+                                    <th class="text-center">Situação</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody th:if="${#lists.size(estudantes) > 0}">
                                     <tr th:each="estudante: ${estudantes}">
-                                        <td th:text="${estudante.nome}"></td>
-                                        <td th:text="${#dates.format(estudante.nascimento, 'dd-MMM-yyyy')}"></td>
-                                        <td th:text="${@mediaCalc.media(estudante)}"></td>
-                                        <td th:text="${estudante.situacao}"></td>
+                                        <td class="text-center" th:text="${estudante.nome}"></td>
+                                        <td class="text-center" th:text="${#dates.format(estudante.nascimento, 'dd-MMM-yyyy')}"></td>
+                                        <td class="text-center" th:text="${@mediaCalc.media(estudante)}"></td>
+                                        <td class="text-center" th:text="${estudante.situacao}"></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </form>
                     </div>
                 </form>
-            </main>
         <div th:insert="~{fragments/footer :: foot}"></div>
     </body>
 </html>

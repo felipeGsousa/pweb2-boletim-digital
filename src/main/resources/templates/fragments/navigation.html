@@ -8,7 +8,7 @@
 <div class="container">
     <div th:fragment="menu">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#">Menu</a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarsExampleDefault"
                     aria-controls="navbarsExampleDefault" aria-expanded="false"
@@ -18,12 +18,11 @@
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link"
-                                                   th:href="@{/home}">HOME<span class="sr-only">'</span>
+                    <li class="nav-item active"><a class="nav-link" th:href="@{/home}">HOME<span class="sr-only">'</span>
                     </a></li>
                     <li class="nav-item dropdown"><a
                             class="nav-link dropdown-toggle" href="#" id="dropdown01"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Operações</a>
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AÇÕES</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <a class="dropdown-item" th:href="@{/estudantes/form}">Cadastro</a>
                             <a class="dropdown-item" th:href="@{/estudantes/list}">Estudantes</a>
@@ -31,12 +30,8 @@
                         </div>
                     </li>
                 </ul>
-                <form th:action="@{/login/out}" class="form-inline my-2 my-lg-0">
-						<span th:if="${session.admin != null}"> <span
-                                th:text="${session.admin.nome}"
-                                style="margin-right: 15px; color: lightgray;"></span>
-						</span>
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Sair</button>
+                <form th:action="@{/login/out}">
+                    <button class="btn btn-secondary" type="submit">Sair</button>
                 </form>
             </div>
         </nav>

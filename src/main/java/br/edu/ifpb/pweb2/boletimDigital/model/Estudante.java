@@ -1,8 +1,12 @@
 package br.edu.ifpb.pweb2.boletimDigital.model;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -27,18 +31,23 @@ public class Estudante {
     private Date nascimento;
 
     @Column(name = "ft_faltas")
+    @Max(value = 100, message = "Valor não pode ser maior que 100")
     private Integer faltas;
 
     @Column(name = "nt_nota1")
+    @Max(value = 100, message = "Valor não pode ser maior que 100")
     private BigDecimal nota1;
 
     @Column(name = "nt_nota2")
+    @Max(value = 100, message = "Valor não pode ser maior que 100")
     private BigDecimal nota2;
 
     @Column(name = "nt_nota3")
+    @Max(value = 100, message = "Valor não pode ser maior que 100")
     private BigDecimal nota3;
 
     @Column(name = "nf_nota_final")
+    @Max(value = 100, message = "Valor não pode ser maior que 100")
     private BigDecimal notaFinal;
 
     @Column(name = "st_situacao")

@@ -5,12 +5,14 @@ import br.edu.ifpb.pweb2.boletimDigital.repository.AdminRepository;
 import br.edu.ifpb.pweb2.boletimDigital.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 public class LoginController {
@@ -27,7 +29,7 @@ public class LoginController {
             Admin createAdmin = new Admin();
 
             createAdmin.setNome("admin");
-            createAdmin.setSenha(PasswordUtil.criptografaSenha("admin1234567890"));
+            createAdmin.setSenha(PasswordUtil.criptografaSenha("admin123"));
 
             adminRepository.save(createAdmin);
         }
@@ -35,7 +37,10 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(Admin admin, HttpSession session, ModelAndView modelAndView, RedirectAttributes redirectAttributes){
+    public ModelAndView login(@Valid Admin admin,
+                              HttpSession session, ModelAndView modelAndView,
+                              RedirectAttributes redirectAttributes){
+
 
         if((admin = this.adminIsValido(admin)) != null){
             session.setAttribute("admin", admin);
@@ -56,7 +61,6 @@ public class LoginController {
 
     public Admin adminIsValido(Admin admin) {
         Admin adminBD = adminRepository.findByNome(admin.getNome());
-        System.out.println(adminBD);
         boolean valido = false;
         if(adminBD != null){
             if (PasswordUtil.verificaSenha(admin.getSenha(), adminBD.getSenha())){
