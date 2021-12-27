@@ -42,4 +42,10 @@ public class MediaCalc {
         return media;
 
     }
+
+    public Boolean situacao(Estudante estudante){
+        if (estudante.getSituacao() == Estudante.EnumSituacao.FN) {return true;}
+        else if(estudante.getNotaFinal() != null){return true;}
+        else{return false;}
+    }
 }

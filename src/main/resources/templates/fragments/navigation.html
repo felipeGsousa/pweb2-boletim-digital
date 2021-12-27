@@ -30,6 +30,9 @@
                     </li>
                 </ul>
                 <form th:action="@{/login/out}">
+                    <span th:if="${session.admin != null}">
+                        <span th:text="${session.admin.nome}" style="margin-right: 15px; color: lightgray;"></span>
+                    </span>
                     <button class="btn btn-secondary" type="submit">Sair</button>
                 </form>
             </div>

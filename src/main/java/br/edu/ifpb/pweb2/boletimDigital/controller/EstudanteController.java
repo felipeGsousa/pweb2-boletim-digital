@@ -4,30 +4,21 @@ import br.edu.ifpb.pweb2.boletimDigital.model.Estudante;
 import br.edu.ifpb.pweb2.boletimDigital.repository.EstudanteRepository;
 import br.edu.ifpb.pweb2.boletimDigital.utils.MediaCalc;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.Id;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 import javax.validation.Valid;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+
 
 import java.util.Locale;
-import java.util.Map;
+
 
 @Controller
 @RequestMapping("/estudantes")
@@ -42,39 +33,44 @@ public class EstudanteController {
     private Integer idEst;
 
     @RequestMapping("/form")
-    public String getForm(Estudante estudante, Model model){
-        model.addAttribute("estudante", estudante);
-        return "estudantes/form";
+    public ModelAndView getForm(Estudante estudante, ModelAndView modelAndView){
+        modelAndView.setViewName("/estudantes/form");
+        modelAndView.addObject("estudante", estudante);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/relatorio", method = RequestMethod.GET)
     public ModelAndView getRelatorio(ModelAndView modelAndView){
         modelAndView.addObject("estudantes", estudanteRepository.findAll(Sort.by(Sort.Direction.ASC, "nome")));
-        modelAndView.setViewName("estudantes/relatorio");
+        modelAndView.setViewName("/estudantes/relatorio");
         return modelAndView;
     }
 
 
     @RequestMapping("/estudante/{id}")
-    public String getEstudante(@PathVariable(value = "id") Integer id,Estudante estudante, Model model){
+    public ModelAndView getEstudante(@PathVariable(value = "id") Integer id,Estudante estudante, ModelAndView modelAndView){
         estudante = estudanteRepository.getById(id);
         idEst = id;
-        model.addAttribute("estudante", estudante);
-        return "estudantes/estudante";
+        modelAndView.setViewName("/estudantes/estudante");
+        modelAndView.addObject("estudante", estudante);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/notas/{id}", method = RequestMethod.GET)
-    public String getNotas(@PathVariable Integer id, Estudante estudante, Model model) {
+    public ModelAndView getNotas(@PathVariable Integer id, Estudante estudante, ModelAndView modelAndView) {
         estudante = estudanteRepository.getById(id);
         idEst = id;
-        model.addAttribute("estudante", estudante);
-        return "estudantes/notas";
+        modelAndView.setViewName("/estudantes/notas");
+        modelAndView.addObject("estudante", estudante);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@Valid Estudante estudante, BindingResult result, RedirectAttributes redirectAttributes){
+    public ModelAndView save(@Valid Estudante estudante, BindingResult result, ModelAndView modelAndView, RedirectAttributes redirectAttributes){
         if (result.hasErrors()) {
-            return "estudantes/form";
+            modelAndView.addObject("estudante", estudante);
+            modelAndView.setViewName("/estudante/form");
+            return modelAndView;
         }
 
         estudante.setNome(estudante.getNome().toUpperCase(Locale.ROOT));
@@ -83,19 +79,21 @@ public class EstudanteController {
         estudanteRepository.save(estudante);
 
         redirectAttributes.addFlashAttribute("mensagem", "Estudante cadastrado com sucesso!");
-
-        return "redirect:/estudantes/list";
+        modelAndView.setViewName("redirect:/estudantes/list");
+        return modelAndView;
     }
     
     @RequestMapping(value = "/salvanotas", method = RequestMethod.POST)
-    public String notas(@Valid Estudante estudante,
-                        BindingResult result,
+    public ModelAndView notas(@Valid Estudante estudante,
+                        BindingResult result,ModelAndView modelAndView,
                         RedirectAttributes redirectAttributes
                         ){
 
 
         if (result.hasErrors()){
-            return "estudantes/notas";
+            modelAndView.addObject("estudante", estudante);
+            modelAndView.setViewName("/estudantes/notas");
+            return modelAndView;
         }
 
 
@@ -122,18 +120,20 @@ public class EstudanteController {
         estudanteRepository.save(estudanteEdit);
 
         redirectAttributes.addFlashAttribute("mensagem", "Notas adicionadas!");
-
-        return "redirect:/estudantes/list";
+        modelAndView.setViewName("redirect:/estudantes/list");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/editar", method = RequestMethod.POST)
-    public String editar(@Valid Estudante estudante,
-                         BindingResult result,
+    public ModelAndView editar(@Valid Estudante estudante,
+                         BindingResult result,ModelAndView modelAndView,
                          RedirectAttributes redirectAttributes){
 
 
         if (result.hasErrors()){
-            return "estudantes/estudante";
+            modelAndView.addObject("estudante", estudante);
+            modelAndView.setViewName("/estudantes/estudante");
+            return modelAndView;
         }
 
         Estudante estudanteSalvo = estudanteRepository.getById(idEst);
@@ -144,8 +144,8 @@ public class EstudanteController {
         estudanteRepository.save(estudanteSalvo);
 
         redirectAttributes.addFlashAttribute("mensagem", "Dados do estudante foram editados!");
-
-        return "redirect:/estudantes/list";
+        modelAndView.setViewName("redirect:/estudantes/list");
+        return modelAndView;
     }
 
     @RequestMapping("/delete/{id}")
@@ -159,7 +159,7 @@ public class EstudanteController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ModelAndView listAll(ModelAndView modelAndView){
         modelAndView.addObject("estudantes", estudanteRepository.findAll(Sort.by(Sort.Direction.ASC, "nome")));
-        modelAndView.setViewName("estudantes/list");
+        modelAndView.setViewName("/estudantes/list");
         return modelAndView;
     }
 

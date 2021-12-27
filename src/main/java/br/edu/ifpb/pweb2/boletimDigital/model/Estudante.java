@@ -31,22 +31,27 @@ public class Estudante {
     private Date nascimento;
 
     @Column(name = "ft_faltas")
+    @Min(value = 0, message = "Valor não pode ser menor que 0")
     @Max(value = 100, message = "Valor não pode ser maior que 100")
     private Integer faltas;
 
     @Column(name = "nt_nota1")
+    @Min(value = 0, message = "Valor não pode ser menor que 0")
     @Max(value = 100, message = "Valor não pode ser maior que 100")
     private BigDecimal nota1;
 
     @Column(name = "nt_nota2")
+    @Min(value = 0, message = "Valor não pode ser menor que 0")
     @Max(value = 100, message = "Valor não pode ser maior que 100")
     private BigDecimal nota2;
 
     @Column(name = "nt_nota3")
+    @Min(value = 0, message = "Valor não pode ser menor que 0")
     @Max(value = 100, message = "Valor não pode ser maior que 100")
     private BigDecimal nota3;
 
     @Column(name = "nf_nota_final")
+    @Min(value = 0, message = "Valor não pode ser menor que 0")
     @Max(value = 100, message = "Valor não pode ser maior que 100")
     private BigDecimal notaFinal;
 

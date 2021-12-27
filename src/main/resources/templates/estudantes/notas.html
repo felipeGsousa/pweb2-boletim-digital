@@ -25,7 +25,7 @@
                         <label>Nota 3</label><input class="form-control form-control-lg" type="number" th:id="nota3" th:name="nota3" th:value="*{nota3}"/>
                         <p th:if="${#fields.hasErrors('nota3')}" th:errorclass="error" th:errors="*{nota3}"/>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" th:if="${@mediaCalc.situacao(estudante)}">
                         <label>Nota Final</label><input class="form-control form-control-lg" type="number" th:id="notaFinal" th:name="notaFinal" th:value="*{notaFinal}"/>
                         <p th:if="${#fields.hasErrors('notaFinal')}" th:errorclass="error" th:errors="*{notaFinal}" />
                     </div>

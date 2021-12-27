@@ -11,9 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/home")
 public class HomeController {
 
-    @Autowired
-    private EstudanteRepository estudanteRepository;
-
     @RequestMapping(method = RequestMethod.GET)
     public String showHomepage() {
         return "home";
