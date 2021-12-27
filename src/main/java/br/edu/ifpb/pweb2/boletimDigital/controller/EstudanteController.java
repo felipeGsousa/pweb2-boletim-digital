@@ -173,7 +173,7 @@ public class EstudanteController {
         if (media.compareTo(new BigDecimal(101)) == -1) {
             if (estudante.getFaltas()!= null && estudante.getFaltas() >= 25) {
                 estudante.setSituacao(Estudante.EnumSituacao.RF);
-            } else if (faltaNota && estudante.getFaltas() == null || !faltaNota && estudante.getFaltas() == null) {
+            } else if (faltaNota && estudante.getFaltas() != null || faltaNota && estudante.getFaltas() == null || !faltaNota && estudante.getFaltas() == null) {
                 estudante.setSituacao(Estudante.EnumSituacao.MT);
             } else if (media.compareTo(new BigDecimal(69)) == 1 && !faltaNota && estudante.getFaltas() != null) {
                 estudante.setSituacao(Estudante.EnumSituacao.AP);
