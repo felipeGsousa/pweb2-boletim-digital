@@ -17,6 +17,7 @@
                                     <th class="text-center">Nome</th>
                                     <th class="text-center">Nascimento</th>
                                     <th class="text-center">Média</th>
+                                    <th class="text-center">Prova Final</th>
                                     <th class="text-center">Situação</th>
                                 </tr>
                                 </thead>
@@ -25,6 +26,7 @@
                                         <td class="text-center" th:text="${estudante.nome}"></td>
                                         <td class="text-center" th:text="${#dates.format(estudante.nascimento, 'dd-MMM-yyyy')}"></td>
                                         <td class="text-center" th:text="${@mediaCalc.media(estudante)}"></td>
+                                        <td class="text-center"><span th:if="${estudante.notaFinal != null}" th:text="${estudante.notaFinal}"></span></td>
                                         <td class="text-center" th:text="${estudante.situacao}"></td>
                                     </tr>
                                 </tbody>
