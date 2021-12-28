@@ -69,7 +69,7 @@ public class EstudanteController {
     public ModelAndView save(@Valid Estudante estudante, BindingResult result, ModelAndView modelAndView, RedirectAttributes redirectAttributes){
         if (result.hasErrors()) {
             modelAndView.addObject("estudante", estudante);
-            modelAndView.setViewName("/estudante/form");
+            modelAndView.setViewName("/estudantes/form");
             return modelAndView;
         }
 
