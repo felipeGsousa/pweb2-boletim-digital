@@ -36,7 +36,7 @@ public class MediaCalc {
                 media = new BigDecimal(101);
             }
         }else {
-            media = estudante.getNota1().add(estudante.getNota2() .add(estudante.getNota3())).divide(divisor,0 , RoundingMode.HALF_UP);
+            media = estudante.getNota1().add(estudante.getNota2() .add(estudante.getNota3())).divide(divisor,2 , RoundingMode.HALF_UP);
         }
 
         return media;
